@@ -59,3 +59,4 @@ homed.conf
 
 # other
 .vscode/
+build/
