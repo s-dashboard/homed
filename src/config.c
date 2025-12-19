@@ -1,24 +1,15 @@
+#include <homed/config.h>
+#include <homed/helpers.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
-#include "config_t.h"
 
-static void trim(char *s) {
-    char *end;
+struct homed_config *homed_parse_config(const char *path) {
 
-    // trim leading
-    while (isspace((unsigned char)*s)) s++;
+    struct homed_config *cfg = calloc(1, sizeof *cfg);
 
-    // trim trailing
-    end = s + strlen(s) - 1;
-    while (end > s && isspace((unsigned char)*end))
-        *end-- = '\0';
-}
-
-int load_config(const char *path, CONFIG_T *cfg) {
     FILE *f = fopen(path, "r");
-    if (!f) return -1;
+    if (!f) return NULL;
 
     char line[256];
     while (fgets(line, sizeof(line), f)) {
@@ -44,6 +35,8 @@ int load_config(const char *path, CONFIG_T *cfg) {
             cfg->poll_interval = atoi(val);
     }
 
+
     fclose(f);
-    return 0;
+
+    return cfg;
 }

@@ -1,20 +1,36 @@
+# flags
 CC = cc
-CFLAGS = -I src/include -Wall -Wextra
-LDFLAGS = -L libs -lm
+CPPFLAGS = -Isrc/include
+CFLAGS ?= -Wall -Wextra -MMD -MP
+CFLAGS += -DSYSCONFDIR=\"/etc\"
+LDFLAGS = -Llibs
+LDLIBS = -lm
 
-SRC = $(wildcard src/*.c)
-OBJ = $(SRC:.c=.o)
+# source files
+SRC := $(wildcard src/*.c)
+
+# object files (mirrored under build/)
+OBJ := $(SRC:src/%.c=build/%.o)
+
+# avoid weird edge cases, if a file named clean ever appears.
+.PHONY: clean build
 
 # final executable
-build/homed: build $(OBJ)
-		$(CC) $(OBJ) $(LDFLAGS) -o $@
+build/homed: $(OBJ) | build
+	$(CC) $(OBJ) $(LDFLAGS) $(LDLIBS) -o $@
 
 # ensure build directory exists
 build:
-		mkdir -p build
+	mkdir -p build
 
 # compile .c → .o
-src/%.o: src/%.c
-		$(CC) $(CFLAGS) -c $< -o $@
+build/%.o: src/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-clean:	
+# clean build artifacts
+clean:
+	rm -rf build
+
+# include auto-generated header dependencies
+-include $(OBJ:.o=.d)

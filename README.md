@@ -17,15 +17,3 @@ ssh_timeout = 5
 poll_interval = 30
 
 away_timeout = 180
-
-
-
-## Pseudo code
-for i in eth5 eth6; do
-    wl -i $i assoclist addto wl_assoclist
-done
-
-if phone_mac in wl_assoclist:
-    person = HOME
-else:
-    person = AWAY
