@@ -40,3 +40,11 @@ struct homed_config *homed_parse_config(const char *path) {
 
     return cfg;
 }
+
+void homed_free_config(struct homed_config *cfg)
+{
+    if (!cfg)
+        return;
+
+    free(cfg);
+}

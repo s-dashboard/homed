@@ -11,5 +11,6 @@ struct homed_config {
 };
 
 struct homed_config *homed_parse_config(const char *path);
+void homed_free_config(struct homed_config *cfg);
 
 #endif
