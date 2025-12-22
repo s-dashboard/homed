@@ -3,6 +3,6 @@
 
 #include <homed/members.h>
 
-void play_sound(char * sound_path);
+void play_sound(const char * sound_path);
 
 #endif

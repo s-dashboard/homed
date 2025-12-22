@@ -42,7 +42,7 @@ void free_macaddresses(struct mac_address *head)
     }
 }
 
-struct mac_address *wifi_clients(void *arg)
+struct mac_address *wifi_clients(const void *arg)
 {
     if (!arg)
     {
@@ -50,7 +50,7 @@ struct mac_address *wifi_clients(void *arg)
         return NULL;
     }
 
-    struct homed_config *cfg = arg;
+    const struct homed_config *cfg = arg;
 
     char cmd[512];
     ssh_cmd(cmd, sizeof(cmd), cfg);

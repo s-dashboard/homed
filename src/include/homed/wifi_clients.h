@@ -11,7 +11,7 @@ struct mac_address {
     struct mac_address *next;
 };
 
-struct mac_address *wifi_clients(void *arg);
+struct mac_address *wifi_clients(const void *arg);
 void free_macaddresses(struct mac_address *head);
 int is_mac(const char *s);
 

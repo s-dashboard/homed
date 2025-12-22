@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct bt_device *bt_devices(void *arg) {
+struct bt_device *bt_devices(const void *arg) {
     printf("DEBUG: Scan BT devices\n");
 
     if (!arg)
@@ -10,7 +10,8 @@ struct bt_device *bt_devices(void *arg) {
         return NULL;
     }
 
-    struct homed_config *cfg = arg;
+    const struct homed_config *cfg = arg;
+    (void)cfg; // mark as unused for the moment, remeber to remove. :D
 
     // TODO 
     // 1. connect to BT-dongle (perhaps outside timer) humm ... yes yes...

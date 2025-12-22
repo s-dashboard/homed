@@ -12,3 +12,19 @@ void timer(int (*fn)(void *), void *arg, int seconds) {
         sleep(seconds); 
     }
 }
+
+// TODO: Move over to own threads and remove the old timer above. 
+void *timer_thread(void *arg)
+{
+    struct thread_args *t = arg;
+
+    while (1) {
+        int err = t->fn(t->arg);
+        if (err != 0)
+            break;
+
+        sleep(t->seconds);
+    }
+
+    return NULL;
+}

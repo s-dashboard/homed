@@ -7,6 +7,17 @@
 #include "homed_paths.h"
 #include <stdio.h>
 #include <time.h>
+// #include <pthread.h>
+// #include <unistd.h>
+// #include <signal.h>
+
+// volatile sig_atomic_t running = 1;
+
+// void handle_signal(int sig)
+// {
+//     (void)sig;
+//     running = 0;
+// }
 
 int presence_scan_bt(
     const struct homed_config *cfg,
@@ -135,7 +146,29 @@ int main(void)
     printf("DEBUG: Start timer\n");
     timer(timer_call, &ctx, cfg->poll_interval);
 
-    // free memory and shutdown.
+    // signal(SIGINT, handle_signal);
+    // signal(SIGTERM, handle_signal);
+
+    // struct thread_args targs = {
+    //     .fn = timer_call,
+    //     .arg = &ctx,
+    //     .seconds = cfg->poll_interval
+    // };
+
+    // fire up thread 
+    // pthread_t tid;
+    // pthread_create(&tid, NULL, timer_thread, &targs);
+    
+    // Keep daemon alive an wait for SIGINT / SIGTERM
+    // while (running) {
+    //     pause();   
+    // }
+
+    // shutdown and stop active threads
+    // running = 0;
+    // pthread_join(tid, NULL);
+
+    // free shared memory.
     presence_free(pl);
     free_members(members);
     homed_free_config(cfg);

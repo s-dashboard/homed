@@ -3,6 +3,6 @@
 #include <stddef.h>
 #include <homed/config.h>
 
-int ssh_cmd(char *cmd, size_t cmdlen, struct homed_config *cfg);
+int ssh_cmd(char *cmd, size_t cmdlen, const struct homed_config *cfg);
 
 #endif
